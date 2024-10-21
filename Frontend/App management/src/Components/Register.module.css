@@ -1,68 +1,85 @@
-*{
+* {
     padding: 0;
     margin: 0;
     box-sizing: border-box;
-}
-.container{
+  }
+  
+  .container {
     display: flex;
     justify-content: space-between;
-    align-items: center;    
-   
-}
-.left{
+    align-items: center;
+  }
+  
+  .left {
     width: 50vw;
     height: 100vh;
-    background-color:#17A2B8;
+    background-color: #17A2B8;
     text-align: center;
     display: flex;
-    flex-direction: column ;
+    flex-direction: column;
     justify-content: center;
-}
-.Right{
+  }
+  
+  .Right {
     width: 50vw;
     padding: 20px;
     overflow: hidden;
     height: 100vh;
-}
-.inputField {
-    margin: 8px 0px;
-    width: 80%; 
-    padding: 12px 20px 12px 40px; 
+  }
+  
+  .inputField {
+    margin: 8px 0;
+    width: calc(100% - 40px); /* Ensure space for icons */
+    padding: 12px 20px 12px 40px; /* Padding to account for left icon */
     border: 1px solid #ccc;
     border-radius: 8px;
     font-size: 16px;
-    display: inline-block;
+    box-sizing: border-box;
   }
-.backgroundCircle{
+  
+  .inputGroup {
+    position: relative;
+    margin-bottom: 5px; /* Ensure space between input groups */
+    margin-left: 120px;
+    width: 70%; /* Make sure the group takes up full width */
+    display: flex;
+    flex-direction: column; /* Stack elements vertically */
+    align-items: flex-start; /* Align items to the start */
+  }
+  
+  .backgroundCircle {
     position: absolute;
     background-color: #317F8B;
     border-radius: 50%;
     width: 250px;
-    height: 250px; 
+    height: 250px;
     top: 40%;
     left: 50%;
     transform: translate(-50%, -50%);
-}
-.roboContainer{
+  }
+  
+  .roboContainer {
     position: relative;
-    margin-bottom: 20px
-}
-.robo{
+    margin-bottom: 20px;
+  }
+  
+  .robo {
     width: 15vw;
     height: 30vh;
     position: relative;
     z-index: 1;
-}
-.para{
+  }
+  
+  .para {
     color: #FFFFFF;
     font-family: 'Open sans';
     font-weight: 600;
     font-size: 30px;
     margin-top: 20px;
     line-height: 1;
-}
-
-.span{
+  }
+  
+  .span {
     color: #FFFFFF;
     font-family: 'Open sans';
     font-weight: 400;
@@ -70,51 +87,49 @@
     margin-top: 20px;
     padding-left: 10px;
     line-height: 1;
-}
-.icon {
+  }
+  .icon {
     position: absolute;
-    margin-left: 10px;
-    z-index: 1;
-    width: 20px;
+    left: 10px; /* Ensure the icon stays within the input field */
+    top: 45%; /* Center icon vertically */
+    transform: translateY(-50%);
+    width: 20px; /* Set icon size */
     height: 20px;
-    pointer-events: none;
   }
-
-h3 {
-    text-align: center;
-    color: #000000;
-    margin-bottom: 70px;
-    margin-top: 90px; 
-    font-size: 24px; 
-    font-family: 'Open sans';
-  }
-.eyeIcon {
-    width: 20px;
+  
+  .eyeIcon {
+    position: absolute;
+    right: 50px; /* Ensure the icon stays within the input field */
+    top: 40%; /* Center icon vertically */
+    transform: translateY(-50%);
+    width: 20px; /* Set icon size */
     height: 20px;
-    margin-left: -30px;
     cursor: pointer;
   }
-
-.inputGroup {
-    display: flex;
-    align-items: center;
-    margin-bottom: 10px;
-    margin-left: 130px;
-}
-
-.registerButton {
+  
+  h3 {
+    text-align: center;
+    color: #000000;
+    margin-bottom: 50px;
+    margin-top: 90px;
+    font-size: 24px;
+    font-family: 'Open sans';
+  }
+  
+  .registerButton {
     width: 70%;
-    background-color:#17A2B8;
+    background-color: #17A2B8;
     color: white;
     padding: 14px 20px;
     border: none;
     border-radius: 30px;
     cursor: pointer;
-    margin:20px 120px;
+    margin: 20px 120px;
     font-family: 'Open sans';
     font-size: 15px;
-}
-.loginLink {
+  }
+  
+  .loginLink {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -123,9 +138,10 @@ h3 {
     font-size: 19px;
     font-weight: 400;
     color: #828282;
-}
-.LoginButton {
-    width:75%;
+  }
+  
+  .LoginButton {
+    width: 75%;
     background-color: #FFFFFF;
     color: #17A2B8;
     border: 2px solid #17A2B8;
@@ -136,4 +152,45 @@ h3 {
     font-size: 15px;
     padding: 14px 20px;
     margin-left: 30px;
-}
+  }
+  
+  .error {
+    color: red;
+    font-size: 10px;
+    font-family: 'Open sans';
+    display: block;
+    width: 100%; /* Ensure error message aligns with input field */
+  }
+  
+  .toastMessage {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    background-color: #323232;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  }
+  
+  @media (max-width: 1200px) {
+    .inputGroup {
+      margin-left: 80px; /* Adjust for slightly smaller screens */
+      width: 80%; /* Make the input group a bit wider */
+    }
+  }
+  
+  @media (max-width: 992px) {
+    .inputGroup {
+      margin-left: 40px; /* Adjust for smaller screens */
+      width: 90%; /* Make the input group wider */
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .inputGroup {
+      margin-left: 20px; /* Further adjust for tablets */
+      width: 95%; /* Make the input group almost full width */
+    }
+  }
+  

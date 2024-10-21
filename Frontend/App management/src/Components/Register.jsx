@@ -12,6 +12,14 @@ function Register() {
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
     const[CurrentEyeIcon, setCurrentEyeIcon] = useState(icon4);
     const [currentConfirmEyeIcon, setCurrentConfirmEyeIcon] = useState(icon4);
+    const [formErrors, setFormErrors] = useState({});
+    const [toastMessage, setToastMessage] = useState('');
+    const [formData, setFormData] = useState({
+        name: '',
+        email: '',
+        password: '',
+        confirmPassword: '',
+      });
  const handleLoginClick = () => {
     window.location.href = '/login';
 };
@@ -23,8 +31,45 @@ const ToggleConfirmEyeIcon = ()=>{
     setShowConfirmPassword(!showConfirmPassword);
     setCurrentConfirmEyeIcon(showConfirmPassword? icon4 : icon5);
 }
+const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+  };
+  const validateForm = () => {
+    const errors = {};
+    if (!formData.name) errors.name = '*Name is required';
+    if (!formData.email) errors.email = '*Email is required';
+      if (!formData.confirmPassword) {
+        errors.confirmPassword = '*Confirm Password is required';
+      } else if (formData.password !== formData.confirmPassword) {
+        errors.confirmPassword = '*Passwords do not match';
+      }
+      if (!formData.password) {
+        errors.password = '*Password is required';
+      } else if (formData.password.length < 8 || !/\d/.test(formData.password)) {
+        errors.password = ' *Password must be at least 8 characters long and contain at least one number';
+      }
+      setFormErrors(errors);
+      return Object.keys(errors).length === 0;
+  };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (validateForm()) {
+      // Handle successful form submission
+      console.log('Form submitted', formData);
+      setToastMessage('Registration successful!');
+    } else {
+      setToastMessage('Please correct the errors in the form');
+    }
+   setTimeout(()=>{
+    setToastMessage('')
+   },5000);
+  };
   return (
-    <div className={styles.container}>
+    <form className={styles.container} onSubmit={handleSubmit}>
         <div className={styles.left}>
             <div className={styles.roboContainer}>
             <div className={styles.backgroundCircle}></div>
@@ -37,30 +82,46 @@ const ToggleConfirmEyeIcon = ()=>{
             <h3>Register</h3>
             <div className={styles.inputGroup}>
             <img src={icon1} alt="Name Icon" className={styles.icon} />
-            <input type='text' placeholder="Name" className={styles.inputField} />
+            <input type='text' placeholder="Name" name='name' className={styles.inputField} value={formData.name} onChange={handleInputChange} />
+            {formErrors.name && (
+            <span className={styles.error}>{formErrors.name}</span>
+          )}
             </div>
             <div className={styles.inputGroup}>
             <img src = {icon2} alt="Email" className={styles.icon} />
-            <input type = 'email' placeholder='Email' className={styles.inputField} />
+            <input type = 'email' placeholder='Email'name="email"className={styles.inputField} value={formData.email} onChange={handleInputChange} />
+            {formErrors.email && (
+            <span className={styles.error}>{formErrors.email}</span>
+          )}
             </div>
             <div className={styles.inputGroup}>
             <img src = {icon3} alt= "Confirm Password" className={styles.icon} />
-            <input type = 'password' placeholder='Confirm Password' className={styles.inputField} />
+            <input type={showConfirmPassword ? 'text' : 'password'} placeholder='Confirm Password'name="confirmPassword" className={styles.inputField} value={formData.confirmPassword} onChange={handleInputChange} />
             <img src = {currentConfirmEyeIcon} alt="Show Password" className={styles.eyeIcon}  onClick={ToggleConfirmEyeIcon} />
+            {formErrors.confirmPassword && (
+            <span className={styles.error}>{formErrors.confirmPassword}</span>
+            )}
             </div>
             <div className={styles.inputGroup}>
-            <img src={icon3} alt= "Password" className={styles.icon} />
-            <input type='password' placeholder='Password' className={styles.inputField} />
+            <img src={icon3}  alt= "Password" className={styles.icon} />
+            <input type={ShowPassword ? 'text' : 'password'} placeholder='Password' name="password" className={styles.inputField} value={formData.password} onChange={handleInputChange}/>
             <img src = {CurrentEyeIcon} alt="Show Password" className={styles.eyeIcon} onClick={ToggleEyeIcon}/>
-
+            {formErrors.password && (
+            <span className={styles.error}>{formErrors.password}</span>
+            )}
             </div>
-            <button className={styles.registerButton}>Register</button>
+            <button type='submit' className={styles.registerButton}>Register</button>
             <div className={styles.loginLink}>
             <p>Have an account?</p>
             <button className={styles.LoginButton} onClick={handleLoginClick}>Login</button>
           </div>
         </div>
-    </div>
+        {toastMessage && (
+        <div className={styles.toastMessage}>
+          {toastMessage}
+        </div>
+      )}
+    </form>
   )
 }
 
