@@ -1,0 +1,157 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+.Taskmodel {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: #303D438C;
+}
+.Taskmodelcontent {
+    background-color: white;
+    padding: 30px;
+    border-radius: 10px;
+}
+.Taskmodelcontent p{
+    font-family: 'Inter';
+    font-weight: 500;
+    font-size: 14px;
+}
+.Taskmodelcontent p span{
+    color: red;
+}
+.Tasktitle{
+    font-family: 'Inter';
+    font-size: 14px;
+    font-weight: 400;
+}
+.priorityOptions{
+    display: flex;
+    justify-content: space-between;
+    margin: 20px 0px;
+}
+.priorityOptions p{
+    font-family: 'Inter';
+    font-size: 14px;
+    font-weight: 500;
+    padding-top: 5px;
+}
+.priorityOptions p span{
+    color: red;
+    margin-right: 10px;
+}
+.highPriority{
+   background-color:  #FF2473;
+    border-radius: 50%;
+    width: 10px;
+    height: 10px;
+    display: inline-block;
+    margin-right: 5px;
+}
+.moderatePriority{
+    background-color:#18B0FF;
+    border-radius: 50%;
+    width: 10px;
+    height: 10px;
+    display: inline-block;
+    margin-right: 5px; 
+}
+.lowPriority{
+    background-color:#63C05B;
+    border-radius: 50%;
+    width: 10px;
+    height: 10px;
+    display: inline-block;
+    margin-right: 5px; 
+}
+.priorityOption{
+    font-family: 'Poppins', sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    border: 1px solid #E2E2E2;
+    border-radius: 8px;
+    color: #767575;
+    padding: 5px;
+    cursor: pointer;
+    margin-right: 5px;
+}
+.input{
+    border: 1px solid #E2E2E2;
+    border-radius: 4px;
+    font-family: 'Inter';
+    font-weight: 400;
+    font-size: 14px;
+    padding: 10px;
+    width: 97%;
+}
+.checklist{
+    margin-bottom: 20px;
+    font-family: 'Inter';
+    font-weight: 500;
+    font-size: 14px;
+}
+.addChecklistButton{
+    font-family: 'Inter';
+    font-weight: 500;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    color: #767575;
+    margin-bottom: 200px;
+    background-color: #FFFFFF;
+}
+.dueDateButton{
+    border: 1px solid #E2E2E2;
+    color: #707070;
+    border-radius: 12px;
+    padding: 10px 30px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 500;
+    font-size: 16px;
+    box-shadow: 0px 2px 12px 0px #82698C33;
+    margin-right: 7rem;
+    cursor: pointer;
+    background-color: #FFFFFF;
+}
+
+.cancelButton{
+    border: 1px solid #CF3636;
+    box-shadow: 0px 2px 12px 0px #82698C33;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 500;
+    font-size: 16px;
+    background-color: #FFFFFF;
+    color: #CF3636;
+    border-radius: 12px;
+    padding: 10px 40px;
+    margin-right: 1rem;
+    cursor: pointer;
+}
+.saveButton{
+    border: none;
+    background-color: #18B0FF;
+    box-shadow: 0px 2px 12px 0px #82698C33;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    font-size: 16px;
+    border-radius: 12px;
+    padding: 10px 40px;
+    color: #FFFFFF;
+    cursor: pointer;
+}
+.error {
+    color: red;
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+}
+  
+  .required {
+    color: red;
+}

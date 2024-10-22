@@ -11,12 +11,13 @@ import Group from "../assets/Group__.png";
 import collapse from "../assets/collapse.png";
 import add from "../assets/Group 10.png";
 import Logoutmodal from "../Components/Logoutmodal.jsx";
-
+import TaskModal from "../Components/TaskModal.jsx";
 function Dashboard() {
   const navigate = useNavigate();
   const [currentDate, setCurrentDate] = useState("");
   const [activeSection, setActiveSection] = useState("");
   const [showModal, setShowModal] = useState(false);
+  const[showTaskModal, setShowTaskModal] = useState(false);
   const username = localStorage.getItem("name");
 
   const handleLogout = () => {
@@ -102,7 +103,7 @@ function Dashboard() {
           </div>
           <div className={styles.Todo}>
             <h4>To do</h4>
-            <img className={styles.add} src={add} alt="add" />
+            <img className={styles.add} src={add} alt="add" onClick={() =>setShowTaskModal(true)}/>
             <img src={collapse} alt="collapse" />
           </div>
           <div className={styles.boardColumn}>
@@ -114,6 +115,10 @@ function Dashboard() {
             <img src={collapse} alt="collapse" />
           </div>
         </div>
+        <TaskModal
+            showModal={showTaskModal}
+            handleClose={() => setShowTaskModal(false)}
+        />
         </>
       )}
       </div>
