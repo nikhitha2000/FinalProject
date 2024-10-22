@@ -88,7 +88,9 @@ function Register() {
           setFormErrors({});
           setCurrentEyeIcon(icon4);
           setCurrentConfirmEyeIcon(icon4);
-          navigate("/dashboard");
+          localStorage.setItem("token", data.token);
+          localStorage.setItem("name", data.name);
+          setTimeout(()=>{navigate("/dashboard");},1000);
         } else {
           if (data.error) {
             setToastMessage(data.error);

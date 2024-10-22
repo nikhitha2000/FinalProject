@@ -14,7 +14,7 @@ const registerUser = async (req, res) => {
 
   try {
     const savedUser = await newUser.save();
-    res.status(201).json(savedUser);
+    res.status(201).json({name: savedUser.name, email: savedUser.email});
   } catch (err) {
     res.status(400).json({ error: err.message });
   }
@@ -31,7 +31,7 @@ const loginUser = async (req, res) => {
     if (!isMatch) return res.status(400).json({ error: 'Invalid credentials' });
 
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
-    res.status(200).json({ message: 'Login successful', token });
+    res.status(200).json({ message: 'Login successful', token,name:user.name});
   } catch (err) {
     res.status(500).json({ error: err.message });
   }

@@ -1,5 +1,5 @@
 // eslint-disable-next-line no-unused-vars
-import React, { useState } from "react";
+import React, { useState , useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "../Components/Login.module.css";
 import robo from "../assets/Group.png";
@@ -49,7 +49,6 @@ function Login() {
     setFormErrors(errors);
     return Object.keys(errors).length === 0;
   };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (validateForm()) {
@@ -61,49 +60,30 @@ function Login() {
           },
           body: JSON.stringify(formData),
         });
-
         const data = await response.json();
-
         if (!response.ok) {
-          // Handle backend errors
           if (data.error) {
-            // Specific error messages from backend
-            if (data.error === "Invalid credentials") {
-              setToastMessage("Invalid email or password.");
-            } else {
-              setToastMessage(data.error); // For other error messages
-            }
+            setToastMessage(data.error);
           } else {
             setToastMessage("Login failed. Please try again.");
           }
         } else {
-          // Successful login
           setToastMessage("Login successful!");
-          localStorage.setItem("token", data.token); // Save the token in localStorage
+          localStorage.setItem("token", data.token);
           setFormData({ email: "", password: "" });
           setFormErrors({});
           setCurrentEyeIcon(icon4);
-
-          // Redirect to dashboard after a short delay to show the toast message
           setTimeout(() => {
-            navigate("/dashboard"); // Use navigate to go to the dashboard
-          }, 2000);
+            navigate("/dashboard");
+          }, 1000);
         }
       } catch (error) {
         console.error("Error:", error);
-        setToastMessage(
-          "An unexpected error occurred. Please try again later."
-        );
       }
     } else {
       setToastMessage("Please correct the errors in the form");
     }
-
-    setTimeout(() => {
-      setToastMessage("");
-    }, 5000);
   };
-
   return (
     <form className={styles.container} onSubmit={handleSubmit}>
       <div className={styles.left}>
