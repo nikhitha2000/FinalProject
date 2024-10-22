@@ -20,7 +20,8 @@ function Register() {
         password: '',
         confirmPassword: '',
       });
- const handleLoginClick = () => {
+ const handleLoginClick = (e) => {
+    e.preventDefault();
     window.location.href = '/login';
 };
 const ToggleEyeIcon = () =>{
@@ -58,15 +59,32 @@ const handleInputChange = (e) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (validateForm()) {
-      // Handle successful form submission
+     
       console.log('Form submitted', formData);
       setToastMessage('Registration successful!');
+      
+      
+      setFormData({
+        name: '',
+        email: '',
+        password: '',
+        confirmPassword: '',
+      });
+      
+     
+      setFormErrors({});
+  
+     
+      setCurrentEyeIcon(icon4);
+      setCurrentConfirmEyeIcon(icon4);
     } else {
       setToastMessage('Please correct the errors in the form');
     }
-   setTimeout(()=>{
-    setToastMessage('')
-   },5000);
+    
+    
+    setTimeout(() => {
+      setToastMessage('');
+    }, 5000);
   };
   return (
     <form className={styles.container} onSubmit={handleSubmit}>
