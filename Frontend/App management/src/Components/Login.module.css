@@ -112,6 +112,8 @@ h3 {
   flex-direction: column;
   align-items: center;
   margin: 10px 20px;
+}
+.loginLink p{
   font-family: "Open sans";
   font-size: 19px;
   font-weight: 400;

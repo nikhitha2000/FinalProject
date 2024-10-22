@@ -70,6 +70,7 @@ function Login() {
         } else {
           setToastMessage("Login successful!");
           localStorage.setItem("token", data.token);
+          localStorage.setItem("name", data.name);
           setFormData({ email: "", password: "" });
           setFormErrors({});
           setCurrentEyeIcon(icon4);

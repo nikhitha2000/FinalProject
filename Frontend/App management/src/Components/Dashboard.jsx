@@ -10,12 +10,21 @@ import logout from "../assets/Logout.png";
 import Group from "../assets/Group__.png";
 import collapse from "../assets/collapse.png";
 import add from "../assets/Group 10.png";
+import Logoutmodal from "../Components/Logoutmodal.jsx";
 
 function Dashboard() {
   const navigate = useNavigate();
   const [currentDate, setCurrentDate] = useState("");
   const [activeSection, setActiveSection] = useState("");
+  const [showModal, setShowModal] = useState(false);
   const username = localStorage.getItem("name");
+
+  const handleLogout = () => {
+    localStorage.removeItem('name');
+    localStorage.removeItem('token');
+    navigate("/login");
+  };
+
   useEffect(() => {
     const updateDate = () => {
       const today = new Date();
@@ -28,9 +37,11 @@ function Dashboard() {
     };
     updateDate();
   }, []);
+
   const handleSectionClick = (section) => {
     setActiveSection(section);
   };
+
   return (
     <div className={styles.container}>
       <div className={styles.left}>
@@ -42,7 +53,8 @@ function Dashboard() {
           className={styles.Inputgroup}
           onClick={() => handleSectionClick("Board")}
           style={{
-            backgroundColor: activeSection === "Board" ? "#4391ED1A" : "#FFFFFF", width:'100%',
+            backgroundColor: activeSection === "Board" ? "#4391ED1A" : "#FFFFFF",
+            width: '100%',
           }}
         >
           <img src={Board} alt="Board image" />
@@ -52,23 +64,23 @@ function Dashboard() {
           <img src={Analytics} alt="Analytics image" />
           <h4>Analytics</h4>
         </div>
-
         <div className={styles.Inputgroup}>
           <img src={settings} alt="Settings image" />
           <h4>Settings</h4>
         </div>
         <div
           className={styles.logout}
-          onClick={() => {
-            localStorage.removeItem('username');
-            navigate("/login");
-          }}
+          onClick={() => setShowModal(true)}
         >
           <img src={logout} alt="logout" />
           <h4>Log out</h4>
         </div>
-      </div>
-
+        <Logoutmodal 
+            showModal={showModal} 
+            handleLogout={handleLogout} 
+            handleClose={() => setShowModal(false)} 
+        />
+        </div>
       <div className={styles.right}>
       {activeSection === "Board" && (
         <>

@@ -107,11 +107,7 @@ function Register() {
     } else {
       setToastMessage("Please correct the errors in the form");
     }
-    setTimeout(() => {
-      setToastMessage("");
-    }, 5000);
   };
-
   return (
     <form className={styles.container} onSubmit={handleSubmit}>
       <div className={styles.left}>
