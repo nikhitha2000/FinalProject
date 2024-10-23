@@ -1,13 +1,19 @@
-// eslint-disable-next-line no-unused-vars
-import React from 'react'
-import styles from "../Components/Taskcard.module.css";
+import React from 'react';
+import styles from './TaskCard.module.css';
 
-function Taskcard() {
+const TaskCard = ({ task }) => {
+  const { title, priority, checklist, dueDate } = task;
+
   return (
-    <div className={styles.Taskcardcontainer}>
-        
+    <div className={styles.taskCard}>
+      <div className={`${styles.priorityBadge} ${styles[priority.toLowerCase()]}`}>
+        {priority} Priority
+      </div>
+      <h3>{title}</h3>
+      <p>Checklist ({checklist.length}/3)</p>
+      <p>{new Date(dueDate).toLocaleDateString()}</p>
     </div>
-  )
-}
+  );
+};
 
-export default Taskcard
+export default TaskCard;

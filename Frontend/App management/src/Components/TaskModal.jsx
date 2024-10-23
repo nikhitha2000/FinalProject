@@ -1,7 +1,7 @@
 import React, { useState, useRef } from "react";
 import styles from "../Components/TaskModal.module.css";
 import axios from "axios";
-import Delete from "../assets/Delete.png";
+import trashicon from "../assets/Delete.png";
 
 const TaskModal = ({ showModal, handleClose }) => {
   const [title, setTitle] = useState("");
@@ -44,7 +44,7 @@ const TaskModal = ({ showModal, handleClose }) => {
   };
 
   const handleDateChange = (event) => {
-    setDueDate(event.target.value);
+    setDueDate(event.target.value? new Date(event.target.value) : "");
     setCalendarOpen(false);
   };
 
@@ -84,7 +84,8 @@ const TaskModal = ({ showModal, handleClose }) => {
           title,
           priority,
           checklist,
-          dueDate: dueDate || null,
+          dueDate: dueDate ? new Date(dueDate) : "",
+          status: "to-do",
           assignedEmails,
         });
 
@@ -93,7 +94,7 @@ const TaskModal = ({ showModal, handleClose }) => {
         setPriority("");
         setAssignedEmails([]);
         setChecklist([]);
-        setDueDate(null);
+        setDueDate("");
         handleClose();
       } catch (error) {
         console.error("Error saving task:", error);
@@ -239,8 +240,8 @@ const TaskModal = ({ showModal, handleClose }) => {
                 onChange={(e) => handleChecklistChange(index, e.target.value)}
               />
               <img
-                src={Delete}
-                alt="Delete"
+                src={trashicon}
+                alt="Delete icon"
                 className={styles.trashIcon}
                 onClick={() => handleDeleteChecklistItem(index)}
               />

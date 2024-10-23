@@ -2,17 +2,18 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
-const userRoutes = require('./routes/user');
-const taskRoutes = require('./routes/Taskroutes');  // <-- Add task routes
+const userRoutes = require('./Server/routes/user');
+const taskRoutes = require('./Server/routes/Taskroutes');  // <-- Add task routes
 const cors = require('cors');
 const bodyParser = require('body-parser');
-dotenv.config();
+require('dotenv').config();
 
 const app = express();
 
 app.use(express.json());
 app.use(bodyParser.json());
 app.use(cors());
+
 
 mongoose.connect(process.env.MONGO_URI)  // Using the MongoDB URI from .env
   .then(() => console.log('MongoDB connected'))

@@ -10,7 +10,7 @@ const taskSchema = new mongoose.Schema({
   priority: { type: String, enum: ['LOW', 'MODERATE', 'HIGH'] },
   checklist: [checklistItemSchema],
   assignedEmails: [{ type: String }],
-  dueDate: { type: Date },
+  dueDate: { type: Date,default: "" },
   createdAt: { type: Date, default: Date.now }
 });
 

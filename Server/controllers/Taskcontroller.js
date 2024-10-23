@@ -3,10 +3,12 @@ const Task = require('../models/Taskmodel');
 // Function to create a new task
 exports.createTask = async (req, res) => {
     const { title, priority, checklist ,dueDate,assignedEmails  } = req.body;
-  
+    if (dueDate && isNaN(new Date(dueDate).getTime())) {
+      return res.status(400).json({ message: "Invalid due date" });
+    }
 
     try {
-      const newTask = new Task({ title, priority, checklist ,dueDate: new Date(dueDate),assignedEmails });
+      const newTask = new Task({ title, priority, checklist , dueDate: dueDate ? new Date(dueDate) : null,assignedEmails });
       const savedTask = await newTask.save();
       res.status(201).json(savedTask);
     } catch (error) {

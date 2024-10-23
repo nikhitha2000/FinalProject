@@ -1,0 +1,47 @@
+.taskCard {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 10px;
+  margin-bottom: 15px;
+  background-color: white;
+}
+
+.priorityBadge {
+  font-size: 12px;
+  margin-bottom: 5px;
+}
+
+.highPriority {
+  color: red;
+}
+
+.moderatePriority {
+  color: orange;
+}
+
+.lowPriority {
+  color: green;
+}
+
+.taskTitle {
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.statusButtons {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 10px;
+}
+
+button {
+  padding: 5px 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #f0f0f0;
+}
