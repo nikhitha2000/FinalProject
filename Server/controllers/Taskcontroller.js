@@ -2,14 +2,15 @@ const Task = require('../models/Taskmodel');
 
 // Function to create a new task
 exports.createTask = async (req, res) => {
-    const { title, priority, checklist ,dueDate } = req.body;
+    const { title, priority, checklist ,dueDate,assignedEmails  } = req.body;
   
 
     try {
-      const newTask = new Task({ title, priority, checklist ,dueDate: new Date(dueDate) });
+      const newTask = new Task({ title, priority, checklist ,dueDate: new Date(dueDate),assignedEmails });
       const savedTask = await newTask.save();
       res.status(201).json(savedTask);
     } catch (error) {
+        console.error('Error creating task:', error); 
       res.status(500).json({ message: 'Error creating task' });
     }
   };

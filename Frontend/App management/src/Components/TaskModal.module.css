@@ -110,6 +110,7 @@
     font-family: 'Inter';
     font-weight: 500;
     font-size: 14px;
+    margin-top: 20px;
 }
 .addChecklistButton{
     font-family: 'Inter';
@@ -201,4 +202,64 @@
   }
   .calendarDropdown {
     position: absolute
-  }  
+  } 
+  .parentContainer {
+    position: relative; /* Ensure the dropdown is positioned relative to this container */
+  }
+  
+  .emailDropdown {
+    position: absolute;
+    top: 45px;
+    left: 20px;
+    background-color: #ffffff;
+    border: 1px solid #7E7A7A14;
+    border-radius: 5px;
+    width: 100%; 
+    margin-bottom: 10px;
+ }
+  .inputEmail{
+    border: 1px solid #E2E2E2;
+    border-radius: 4px;
+    padding: 10px;
+    margin-left: 10px;
+    width: 80%;
+}
+.assignLabel{
+    display: inline;
+    font-family: 'Inter';
+    font-weight: 500;
+    font-size: 14px;
+}
+  .emailItem {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+  }
+  .emailAvatar {
+    background-color: #FFEBEB;
+    border-radius: 50%;
+    padding: 10px;
+    display: inline-block;
+  }
+  
+  .emailText {
+    flex-grow: 1;
+    padding-left: 10px;
+    font-size: 16px;
+    color: #20102B;
+    font-family: 'Inter';
+    font-weight: 500;
+  }
+  
+  .assignButton {
+    background-color:#FFFFFF;
+    color: #767575;
+    padding: 5px 40px;
+    border: 1px solid #E2E2E2;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 400;
+  } 
