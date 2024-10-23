@@ -91,6 +91,20 @@
     padding: 10px;
     width: 97%;
 }
+.inputContainer{
+    position: relative;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  border: 1px solid #e2e2e2;
+  border-radius: 12px;
+  padding: 10px;
+  background-color: #fff;
+  font-family: 'Inter';
+    font-weight: 400;
+    font-size: 16px;
+    border: 1px solid #E2E2E2;
+}
 .checklist{
     margin-bottom: 20px;
     font-family: 'Inter';
@@ -107,20 +121,6 @@
     margin-bottom: 200px;
     background-color: #FFFFFF;
 }
-.dueDateButton{
-    border: 1px solid #E2E2E2;
-    color: #707070;
-    border-radius: 12px;
-    padding: 10px 30px;
-    font-family: 'Poppins', sans-serif;
-    font-weight: 500;
-    font-size: 16px;
-    box-shadow: 0px 2px 12px 0px #82698C33;
-    margin-right: 7rem;
-    cursor: pointer;
-    background-color: #FFFFFF;
-}
-
 .cancelButton{
     border: 1px solid #CF3636;
     box-shadow: 0px 2px 12px 0px #82698C33;
@@ -155,3 +155,50 @@
   .required {
     color: red;
 }
+.checklistItem {
+    display: flex; /* Align items horizontally */
+    align-items: center; /* Vertically center the checkbox, input, and trash icon */
+    justify-content: space-around; /* Ensure the input takes available space and the trash icon is pushed to the end */
+    margin-bottom: 20px; /* Spacing between each checklist item */
+  }
+
+  .checklistInput {
+    flex-grow: 1;
+    font-family: 'Inter';
+    font-weight: 400;
+    font-size: 16px;
+    border: none;
+    padding-left: 20px; /* Padding for the checkbox */
+    padding-right: 40px; /* Padding for the trash icon */
+    outline: none;
+  }
+.trashIcon {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out;
+  }
+  .datePickerContainer {
+    position: relative;
+    display: inline-block;
+  }
+  
+  .datePickerButton {
+    background-color: #FFFFFF;
+    color: #707070;
+    padding: 10px 20px;
+    border: 1px solid #E2E2E2;
+    border-radius: 12px;
+    cursor: pointer;
+    font-family: 'Poppins';
+    font-size: 16px;
+    font-weight: 500;
+    margin-right: 30px;
+  }
+  .calendarDropdown {
+    position: absolute
+  }  
