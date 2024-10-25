@@ -57,14 +57,10 @@ const updateUser = async (req, res) => {
     if (!user) {
       return res.status(404).json({ msg: 'User not found' });
     }
-
-    // Check if both email and newPassword are being updated
     if (email && newPassword) {
       return res.status(400).json({ msg: 'Update either email or password, not both at the same time' });
     }
-
-    // Validate old password if new password is provided
-    if (newPassword) {
+    if (newPassword && !email) {
       const isMatch = await bcrypt.compare(oldPassword, user.password);
       if (!isMatch) {
         return res.status(400).json({ msg: 'Invalid Password' });
@@ -72,9 +68,10 @@ const updateUser = async (req, res) => {
       const salt = await bcrypt.genSalt(10);
       user.password = await bcrypt.hash(newPassword, salt);
     }
-
+    if (email && !newPassword) {
+      user.email = email;
+    }
     user.name = name || user.name;
-    user.email = email || user.email;
 
     await user.save();
     res.json({ msg: 'User updated successfully' });
