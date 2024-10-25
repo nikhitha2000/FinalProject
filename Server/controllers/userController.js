@@ -80,19 +80,5 @@ const updateUser = async (req, res) => {
     res.status(500).send('Server Error');
   }
 };
-// const getUser = async (req, res) => {
-//   const { name} = req.body;
-//   try {
-//     const user = await User.findOne({ name}).select('-password');
-//     console.log('Fetching user by email:',name);
-//     if (!user) {
-//       return res.status(404).json({ msg: 'User not found' });
-//     }
-//     res.status(200).json(user);
-//   } catch (error) {
-//     console.error('Server Error:', error);
-//     res.status(500).send('Server Error');
-//   }
-// };
 
 module.exports = { registerUser, loginUser, getAllEmails, updateUser};
