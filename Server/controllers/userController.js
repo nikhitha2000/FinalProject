@@ -49,4 +49,53 @@ const getAllEmails = async (req, res) => {
   }
 };
 
-module.exports = { registerUser, loginUser, getAllEmails };
+
+const updateUser = async (req, res) => {
+  const { name, email, oldPassword, newPassword } = req.body;
+  try {
+    const user = await User.findOne({ name });
+    if (!user) {
+      return res.status(404).json({ msg: 'User not found' });
+    }
+
+    // Check if both email and newPassword are being updated
+    if (email && newPassword) {
+      return res.status(400).json({ msg: 'Update either email or password, not both at the same time' });
+    }
+
+    // Validate old password if new password is provided
+    if (newPassword) {
+      const isMatch = await bcrypt.compare(oldPassword, user.password);
+      if (!isMatch) {
+        return res.status(400).json({ msg: 'Invalid Password' });
+      }
+      const salt = await bcrypt.genSalt(10);
+      user.password = await bcrypt.hash(newPassword, salt);
+    }
+
+    user.name = name || user.name;
+    user.email = email || user.email;
+
+    await user.save();
+    res.json({ msg: 'User updated successfully' });
+  } catch (error) {
+    console.error('Server Error:', error);
+    res.status(500).send('Server Error');
+  }
+};
+// const getUser = async (req, res) => {
+//   const { name} = req.body;
+//   try {
+//     const user = await User.findOne({ name}).select('-password');
+//     console.log('Fetching user by email:',name);
+//     if (!user) {
+//       return res.status(404).json({ msg: 'User not found' });
+//     }
+//     res.status(200).json(user);
+//   } catch (error) {
+//     console.error('Server Error:', error);
+//     res.status(500).send('Server Error');
+//   }
+// };
+
+module.exports = { registerUser, loginUser, getAllEmails, updateUser};

@@ -3,7 +3,7 @@ import styles from "../Components/TaskModal.module.css";
 import axios from "axios";
 import trashicon from "../assets/Delete.png";
 
-const TaskModal = ({ showModal, handleClose }) => {
+const TaskModal = ({ showModal, handleClose,onTaskSaved  }) => {
   const [title, setTitle] = useState("");
   const [priority, setPriority] = useState("");
   const [checklist, setChecklist] = useState([]);
@@ -88,7 +88,8 @@ const TaskModal = ({ showModal, handleClose }) => {
           status: "to-do",
           assignedEmails,
         });
-
+        onTaskSaved(response.data);
+        handleClose();
         console.log("Task saved:", response.data);
         setTitle("");
         setPriority("");

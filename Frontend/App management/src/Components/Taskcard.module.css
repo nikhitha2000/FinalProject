@@ -1,47 +1,110 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
 .taskCard {
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  padding: 10px;
-  margin-bottom: 15px;
-  background-color: white;
+  background-color: #ffffff;
+  border-radius: 10px;
+  padding: 15px;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+  font-family: 'Poppins', sans-serif;
+  font-size: 14px;
+  width: 100%;
+  max-width: 320px;
+  margin: 30px 15px; 
+  position: relative;
+  top:10%;
+  right: 60%;
+}
+
+.options {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+}
+
+.dotsIcon {
+  width: 16px !important;
+  height: 5px !important;
 }
 
 .priorityBadge {
-  font-size: 12px;
-  margin-bottom: 5px;
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
 }
 
-.highPriority {
-  color: red;
+.priorityCircle {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  margin-right: 8px;
 }
 
-.moderatePriority {
-  color: orange;
-}
-
-.lowPriority {
-  color: green;
+.priorityText {
+  font-size: 8px;
+  font-weight: 500;
+  color: #707070;
+  font-family: 'Poppins', sans-serif;
 }
 
 .taskTitle {
   font-size: 16px;
-  font-weight: bold;
-  margin-bottom: 10px;
+  font-weight: 500;
+  margin-bottom: 5px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-family: 'Poppins', sans-serif;
+  color:#000000;
 }
 
+.dueDate {
+  font-size: 12px;
+  color: #707070;
+  margin-bottom: 5px;
+}
+.checklist{
+  margin-right: 50px;
+  font-size: 12px;
+  color: #707070;
+  margin-bottom: 5px;
+  border: 2px solid seagreen;
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+}
+.checklist img{
+  background-color: #EEECEC;
+
+}
 .statusButtons {
   display: flex;
-  justify-content: space-around;
-  margin-top: 10px;
+  justify-content: space-between;
+  padding-top: 10px;
 }
 
-button {
-  padding: 5px 10px;
+.statusButton {
+  background-color: #ddd;
   border: none;
+  padding: 5px 10px;
   border-radius: 5px;
   cursor: pointer;
+  font-size: 12px;
+  transition: background-color 0.2s ease-in-out;
 }
 
-button:hover {
-  background-color: #f0f0f0;
+.statusButton:hover, .statusButton.active {
+  background-color: #4391ed;
+  color: white;
+}
+
+.expandCollapse {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  cursor: pointer;
 }

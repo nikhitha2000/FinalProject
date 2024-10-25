@@ -5,13 +5,14 @@ import { useNavigate } from "react-router-dom";
 import icon from "../assets/codesandbox.png";
 import Board from "../assets/layout.png";
 import Analytics from "../assets/database.png";
-import settings from "../assets/settings.png";
+import settingsIcon from "../assets/settings.png";
 import logout from "../assets/Logout.png";
 import Group from "../assets/Group__.png";
 import collapse from "../assets/collapse.png";
 import add from "../assets/Group 10.png";
 import Logoutmodal from "../Components/Logoutmodal.jsx";
 import TaskModal from "../Components/TaskModal.jsx";
+import Settings from "./Settings.jsx";
 function Dashboard() {
   const navigate = useNavigate();
   const [currentDate, setCurrentDate] = useState("");
@@ -65,8 +66,13 @@ function Dashboard() {
           <img src={Analytics} alt="Analytics image" />
           <h4>Analytics</h4>
         </div>
-        <div className={styles.Inputgroup}>
-          <img src={settings} alt="Settings image" />
+        <div className={styles.Inputgroup}
+          onClick={() => handleSectionClick("Settings")}
+          style={{
+            backgroundColor: activeSection === "Settings" ? "#4391ED1A" : "#FFFFFF",
+            width: '100%',
+          }}>
+          <img src={settingsIcon} alt="Settings image" />
           <h4>Settings</h4>
         </div>
         <div
@@ -121,6 +127,9 @@ function Dashboard() {
         />
         </>
       )}
+      {activeSection === "Settings" && (
+          <Settings />
+        )}
       </div>
     </div>
   );

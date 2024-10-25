@@ -6,8 +6,8 @@ const userRoutes = require('./Server/routes/user');
 const taskRoutes = require('./Server/routes/Taskroutes');  // <-- Add task routes
 const cors = require('cors');
 const bodyParser = require('body-parser');
-require('dotenv').config();
 
+dotenv.config();
 const app = express();
 
 app.use(express.json());

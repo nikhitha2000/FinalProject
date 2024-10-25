@@ -1,0 +1,59 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+.Title {
+  text-align: left;
+  font-family: "Open Sans", sans-serif;
+  font-weight: 600;
+  margin-top: 0%;
+  font-size: 22px;
+  color: #000000;
+}
+.icon {
+  position: relative;
+  left: 30px;
+  width: 25px;
+  height: 25px;
+  top: 5px;
+}
+.inputField {
+  margin: 6px 0;
+  width: 35%;
+  padding: 12px 20px 12px 40px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 16px;
+  box-sizing: border-box;
+  font-family: "Open Sans", sans-serif;
+  color: #828282;
+  border: 1.38px solid #d0d0d0;
+}
+.eyeIcon {
+  width: 25px;
+  height: 25px;
+  cursor: pointer;
+  position: relative;
+  right: 30px;
+  top: 5px;
+}
+.UpdateButton {
+  background-color: #17a2b8;
+  border-radius: 30px;
+  font-family: "Open sans";
+  font-size: 15px;
+  cursor: pointer;
+  color: white;
+  width: 35%;
+  padding: 14px 20px;
+  border: none;
+  cursor: pointer;
+  margin: 25px 5px;
+}
+.errorMessage {
+    color: red;
+    margin-top: 10px;
+    font-size: 14px;
+}
