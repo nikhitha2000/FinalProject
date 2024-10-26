@@ -7,23 +7,35 @@ function Analytics() {
     <div className={styles.AnalyticsContainer}>
       <h3 className={styles.Title}>Analytics</h3>
       <div className={styles.container}>
-      <div className={styles.priorityItem}>
-        <span className={styles.circle} style={{ backgroundColor: '#90c4cc' }}></span>
-        <span className={styles.taskItem}>Backlog Tasks</span>
-        <div className={styles.count}>16</div>
+        <div className={styles.priorityItem}>
+          <span
+            className={styles.circle}
+            style={{ backgroundColor: "#90c4cc" }}
+          ></span>
+          <span className={styles.taskItem}>Backlog Tasks</span>
+          <div className={styles.count}>16</div>
         </div>
         <div className={styles.priorityItem}>
-        <div className={styles.circle} style={{ backgroundColor: '#90c4cc' }}></div>
-        <span className={styles.taskItem}>To-do Tasks</span>
+          <div
+            className={styles.circle}
+            style={{ backgroundColor: "#90c4cc" }}
+          ></div>
+          <span className={styles.taskItem}>To-do Tasks</span>
           <span className={styles.count}>14</span>
-          </div>
+        </div>
         <div className={styles.priorityItem}>
-        <div className={styles.circle} style={{ backgroundColor: '#90c4cc' }}></div>
-        <span className={styles.taskItem}>In Progress Tasks</span>
+          <div
+            className={styles.circle}
+            style={{ backgroundColor: "#90c4cc" }}
+          ></div>
+          <span className={styles.taskItem}>In Progress Tasks</span>
           <span className={styles.count}>03</span>
         </div>
         <div className={styles.priorityItem}>
-        <div className={styles.circle} style={{ backgroundColor: '#90c4cc' }}></div>
+          <div
+            className={styles.circle}
+            style={{ backgroundColor: "#90c4cc" }}
+          ></div>
           <span className={styles.taskItem}>Completed Tasks</span>
           <span className={styles.count}>22</span>
         </div>

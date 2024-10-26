@@ -19,12 +19,12 @@ function Dashboard() {
   const [currentDate, setCurrentDate] = useState("");
   const [activeSection, setActiveSection] = useState("");
   const [showModal, setShowModal] = useState(false);
-  const[showTaskModal, setShowTaskModal] = useState(false);
+  const [showTaskModal, setShowTaskModal] = useState(false);
   const username = localStorage.getItem("name");
 
   const handleLogout = () => {
-    localStorage.removeItem('name');
-    localStorage.removeItem('token');
+    localStorage.removeItem("name");
+    localStorage.removeItem("token");
     navigate("/login");
   };
 
@@ -56,85 +56,94 @@ function Dashboard() {
           className={styles.Inputgroup}
           onClick={() => handleSectionClick("Board")}
           style={{
-            backgroundColor: activeSection === "Board" ? "#4391ED1A" : "#FFFFFF",
-            width: '100%',
+            backgroundColor:
+              activeSection === "Board" ? "#4391ED1A" : "#FFFFFF",
+            width: "100%",
           }}
         >
           <img src={Board} alt="Board image" />
           <h4>Board</h4>
         </div>
-        <div className={styles.Inputgroup}
-        onClick={() => handleSectionClick("Analytics")}
-        style={{
-          backgroundColor: activeSection === "Analytics" ? "#4391ED1A" : "#FFFFFF",
-          width: '100%',
-        }}>
+        <div
+          className={styles.Inputgroup}
+          onClick={() => handleSectionClick("Analytics")}
+          style={{
+            backgroundColor:
+              activeSection === "Analytics" ? "#4391ED1A" : "#FFFFFF",
+            width: "100%",
+          }}
+        >
           <img src={AnalyticsIcon} alt="Analytics image" />
           <h4>Analytics</h4>
         </div>
-        <div className={styles.Inputgroup}
+        <div
+          className={styles.Inputgroup}
           onClick={() => handleSectionClick("Settings")}
           style={{
-            backgroundColor: activeSection === "Settings" ? "#4391ED1A" : "#FFFFFF",
-            width: '100%',
-          }}>
+            backgroundColor:
+              activeSection === "Settings" ? "#4391ED1A" : "#FFFFFF",
+            width: "100%",
+          }}
+        >
           <img src={settingsIcon} alt="Settings image" />
           <h4>Settings</h4>
         </div>
-        <div
-          className={styles.logout}
-          onClick={() => setShowModal(true)}
-        >
+        <div className={styles.logout} onClick={() => setShowModal(true)}>
           <img src={logout} alt="logout" />
           <h4>Log out</h4>
         </div>
-        <Logoutmodal 
-            showModal={showModal} 
-            handleLogout={handleLogout} 
-            handleClose={() => setShowModal(false)} 
+        <Logoutmodal
+          showModal={showModal}
+          handleLogout={handleLogout}
+          handleClose={() => setShowModal(false)}
         />
-        </div>
+      </div>
       <div className={styles.right}>
-      {activeSection === "Board" && (
-        <>
-        <div className={styles.header}>
-          <div className={styles.welcomeMessage}>
-            <h1>Welcome! {username}</h1>
-            <span>{currentDate}</span>
-          </div>
-        </div>
-        <div className={styles.Group}>
-          <p>Board</p>
-          <img src={Group} alt="Group" />
-          <span>Add People</span>
-        </div>
-        <div className={styles.boardContainer}>
-          <div className={styles.boardColumn}>
-            <h4>Backlog</h4>
-            <img src={collapse} alt="collapse" />
-          </div>
-          <div className={styles.Todo}>
-            <h4>To do</h4>
-            <img className={styles.add} src={add} alt="add" onClick={() =>setShowTaskModal(true)}/>
-            <img src={collapse} alt="collapse" />
-          </div>
-          <div className={styles.boardColumn}>
-            <h4>In progress</h4>
-            <img src={collapse} alt="collapse" />
-          </div>
-          <div className={styles.boardColumn}>
-            <h4>Done</h4>
-            <img src={collapse} alt="collapse" />
-          </div>
-        </div>
-        <TaskModal
-            showModal={showTaskModal}
-            handleClose={() => setShowTaskModal(false)}
-        />
-        </>
-      )}
-      {activeSection === "Settings" && <Settings />}
-      {activeSection === "Analytics" && <Analytics />}
+        {activeSection === "Board" && (
+          <>
+            <div className={styles.header}>
+              <div className={styles.welcomeMessage}>
+                <h1>Welcome! {username}</h1>
+                <span>{currentDate}</span>
+              </div>
+            </div>
+            <div className={styles.Group}>
+              <p>Board</p>
+              <img src={Group} alt="Group" />
+              <span>Add People</span>
+            </div>
+            <div className={styles.boardContainer}>
+              <div className={styles.boardColumn}>
+                <h4>Backlog</h4>
+                <img src={collapse} alt="collapse" />
+              </div>
+              <div className={styles.Todo}>
+                <h4>To do</h4>
+                <img
+                  className={styles.add}
+                  src={add}
+                  alt="add"
+                  onClick={() => setShowTaskModal(true)}
+                />
+                <img src={collapse} alt="collapse" />
+              </div>
+              <div className={styles.boardColumn}>
+                <h4>In progress</h4>
+                <img src={collapse} alt="collapse" />
+              </div>
+              <div className={styles.boardColumn}>
+                <h4>Done</h4>
+                <img src={collapse} alt="collapse" />
+              </div>
+            </div>
+            <TaskModal
+              showModal={showTaskModal}
+              handleClose={() => setShowTaskModal(false)}
+            />
+          </>
+        )}
+        {activeSection === "Settings" && <Settings />}
+        {activeSection === "Analytics" && <Analytics />}
       </div>
     </div>
   );

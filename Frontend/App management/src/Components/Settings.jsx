@@ -1,6 +1,6 @@
 // eslint-disable-next-line no-unused-vars
 import React, { useState } from "react";
-import axios from 'axios';
+import axios from "axios";
 import styles from "../Components/Settings.module.css";
 import icon1 from "../assets/Frame 1036.png";
 import icon2 from "../assets/icon.png";
@@ -16,7 +16,7 @@ function Settings() {
   const [userData, setUserData] = useState({ name: "", email: "" });
   const [oldPassword, setOldPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
-  const [message, setMessage] = useState('');
+  const [message, setMessage] = useState("");
 
   const toggleOldPassword = () => {
     setShowOldPassword(!showOldPassword);
@@ -28,26 +28,31 @@ function Settings() {
 
   const handleSave = async () => {
     try {
-      const token = localStorage.getItem('token');
+      const token = localStorage.getItem("token");
       const response = await axios.put(
-        'http://localhost:5000/api/users/update',
+        "http://localhost:5000/api/users/update",
         {
           name: userData.name,
           email: userData.email,
           oldPassword,
           newPassword,
         },
-        { headers: { 'x-auth-token': token } }
+        { headers: { "x-auth-token": token } }
       );
       console.log(response.data);
-      setUserData({ name: '', email: '' });
-      setOldPassword('');
-      setNewPassword('');
-      setMessage('User updated successfully');
-      navigate('/login');
+      setUserData({ name: "", email: "" });
+      setOldPassword("");
+      setNewPassword("");
+      setMessage("User updated successfully");
+      navigate("/login");
     } catch (error) {
-      console.error('Error updating user data:', error.response ? error.response.data : error.message);
-      setMessage(error.response ? error.response.data.msg : 'Error updating user data');
+      console.error(
+        "Error updating user data:",
+        error.response ? error.response.data : error.message
+      );
+      setMessage(
+        error.response ? error.response.data.msg : "Error updating user data"
+      );
     }
   };
 
@@ -111,7 +116,11 @@ function Settings() {
         />
       </div>
       {message && <p className={styles.errorMessage}>{message}</p>}
-      <button type="submit" className={styles.UpdateButton} onClick={handleSave}>
+      <button
+        type="submit"
+        className={styles.UpdateButton}
+        onClick={handleSave}
+      >
         Update
       </button>
     </div>
