@@ -86,7 +86,6 @@
     font-size: 16px;
     width: 40%;
     border: none;
-    margin-left: 200px;
     padding: 15px 0px;
   }
   .confirmEmail{
@@ -98,4 +97,8 @@
   }
   .Confirmtion{
     margin: 20px 0px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: space-between;
   }
