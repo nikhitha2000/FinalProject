@@ -4,7 +4,7 @@ import styles from "../Components/Dashboard.module.css";
 import { useNavigate } from "react-router-dom";
 import icon from "../assets/codesandbox.png";
 import Board from "../assets/layout.png";
-import Analytics from "../assets/database.png";
+import AnalyticsIcon from "../assets/database.png";
 import settingsIcon from "../assets/settings.png";
 import logout from "../assets/Logout.png";
 import Group from "../assets/Group__.png";
@@ -13,6 +13,7 @@ import add from "../assets/Group 10.png";
 import Logoutmodal from "../Components/Logoutmodal.jsx";
 import TaskModal from "../Components/TaskModal.jsx";
 import Settings from "./Settings.jsx";
+import Analytics from "../Components/Analytics.jsx";
 function Dashboard() {
   const navigate = useNavigate();
   const [currentDate, setCurrentDate] = useState("");
@@ -62,8 +63,13 @@ function Dashboard() {
           <img src={Board} alt="Board image" />
           <h4>Board</h4>
         </div>
-        <div className={styles.Inputgroup}>
-          <img src={Analytics} alt="Analytics image" />
+        <div className={styles.Inputgroup}
+        onClick={() => handleSectionClick("Analytics")}
+        style={{
+          backgroundColor: activeSection === "Analytics" ? "#4391ED1A" : "#FFFFFF",
+          width: '100%',
+        }}>
+          <img src={AnalyticsIcon} alt="Analytics image" />
           <h4>Analytics</h4>
         </div>
         <div className={styles.Inputgroup}
@@ -127,9 +133,8 @@ function Dashboard() {
         />
         </>
       )}
-      {activeSection === "Settings" && (
-          <Settings />
-        )}
+      {activeSection === "Settings" && <Settings />}
+      {activeSection === "Analytics" && <Analytics />}
       </div>
     </div>
   );
