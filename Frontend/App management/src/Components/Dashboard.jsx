@@ -14,12 +14,14 @@ import Logoutmodal from "../Components/Logoutmodal.jsx";
 import TaskModal from "../Components/TaskModal.jsx";
 import Settings from "./Settings.jsx";
 import Analytics from "../Components/Analytics.jsx";
+import Addpeople from "./Addpeople.jsx";
 function Dashboard() {
   const navigate = useNavigate();
   const [currentDate, setCurrentDate] = useState("");
   const [activeSection, setActiveSection] = useState("");
   const [showModal, setShowModal] = useState(false);
   const [showTaskModal, setShowTaskModal] = useState(false);
+  const [showAddPeopleModal, setShowAddPeopleModal] = useState(false);
   const username = localStorage.getItem("name");
 
   const handleLogout = () => {
@@ -44,7 +46,9 @@ function Dashboard() {
   const handleSectionClick = (section) => {
     setActiveSection(section);
   };
-
+  // const toggleAddPeopleModal = () => {
+  //   setShowAddPeopleModal(true);
+  // };
   return (
     <div className={styles.container}>
       <div className={styles.left}>
@@ -110,7 +114,7 @@ function Dashboard() {
             <div className={styles.Group}>
               <p>Board</p>
               <img src={Group} alt="Group" />
-              <span>Add People</span>
+              <span className={styles.addPeople} onClick={() => setShowAddPeopleModal(true)}>Add People</span>
             </div>
             <div className={styles.boardContainer}>
               <div className={styles.boardColumn}>
@@ -125,7 +129,6 @@ function Dashboard() {
                   alt="add"
                   onClick={() => setShowTaskModal(true)}
                 />
-                <img src={collapse} alt="collapse" />
               </div>
               <div className={styles.boardColumn}>
                 <h4>In progress</h4>
@@ -145,6 +148,7 @@ function Dashboard() {
         {activeSection === "Settings" && <Settings />}
         {activeSection === "Analytics" && <Analytics />}
       </div>
+      <Addpeople showModal={showAddPeopleModal} handleClose={() => setShowAddPeopleModal(false)} />
     </div>
   );
 }

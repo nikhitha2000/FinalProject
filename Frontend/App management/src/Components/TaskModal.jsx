@@ -3,7 +3,7 @@ import styles from "../Components/TaskModal.module.css";
 import axios from "axios";
 import trashicon from "../assets/Delete.png";
 
-const TaskModal = ({ showModal, handleClose,onTaskSaved  }) => {
+const TaskModal = ({ showModal, handleClose, onTaskSaved }) => {
   const [title, setTitle] = useState("");
   const [priority, setPriority] = useState("");
   const [checklist, setChecklist] = useState([]);
@@ -44,7 +44,7 @@ const TaskModal = ({ showModal, handleClose,onTaskSaved  }) => {
   };
 
   const handleDateChange = (event) => {
-    setDueDate(event.target.value? new Date(event.target.value) : "");
+    setDueDate(event.target.value ? new Date(event.target.value) : "");
     setCalendarOpen(false);
   };
 
@@ -84,7 +84,7 @@ const TaskModal = ({ showModal, handleClose,onTaskSaved  }) => {
           title,
           priority,
           checklist,
-          dueDate: dueDate ? new Date(dueDate) : "",
+          dueDate: dueDate ? new Date(dueDate).toLocaleDateString("en-GB") : "",
           status: "to-do",
           assignedEmails,
         });
@@ -262,14 +262,18 @@ const TaskModal = ({ showModal, handleClose,onTaskSaved  }) => {
               className={styles.datePickerButton}
               onClick={toggleCalendar}
             >
-              {dueDate ? `Due Date: ${dueDate}` : "Select Due Date"}
+              {dueDate
+                ? ` ${new Date(dueDate).toLocaleDateString("en-GB")}`
+                : "Select Due Date"}
             </button>
             {calendarOpen && (
               <div className={styles.calendarDropdown}>
                 <input
                   type="date"
                   className={styles.input}
-                  value={dueDate || ""}
+                  value={
+                    dueDate ? new Date(dueDate).toISOString().split("T")[0] : ""
+                  }
                   onChange={handleDateChange}
                 />
               </div>
