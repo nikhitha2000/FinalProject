@@ -1,22 +1,53 @@
-import React from "react";
-import styles from "./TaskCard.module.css";
+// eslint-disable-next-line no-unused-vars
+import React,{useState} from "react";
+import styles from "./Taskcard.module.css";
 import dots from "../assets/dots.png";
 import Arrow from "../assets/Arrow.png";
 
-const TaskCard = ({ task }) => {
+const TaskCard = ({ task, updateStatus }) => {
+  console.log("Task received in Taskcard:", task);
   const { title, priority, checklist, dueDate, status } = task;
+  const isDueDatePassed = dueDate && new Date(dueDate).setHours(0, 0, 0, 0) < new Date().setHours(0, 0, 0, 0);
+  const [showChecklist, setShowChecklist] = useState(false);
+  const [localChecklist, setLocalChecklist] = useState(checklist);
+
+  const toggleChecklistItem = (index) => {
+    const updatedChecklist = localChecklist.map((item, i) =>
+      i === index ? { ...item, done: !item.done } : item
+    );
+    setLocalChecklist(updatedChecklist);
+  };
+
+  const toggleChecklistVisibility = () => {
+    setShowChecklist(!showChecklist);
+  };
+
+  // Determine the background color for the due date
+  const getDueDateBackgroundColor = () => {
+    const style = {
+      backgroundColor: "#DBDBDB",
+      color: "#5A5A5A",
+    };
+    if (status === "done") {
+      style.backgroundColor = "#63C05B";
+      style.color = "#ffffff"; // White font color
+    } else if (priority === "HIGH" || isDueDatePassed) {
+      style.color = "#ffffff";
+      style.backgroundColor = "#CF3636";
+    }
+    return style;
+  };
 
   const formatDueDate = (date) => {
     if (!date) return "";
     const taskDate = new Date(date);
     return taskDate.toLocaleDateString("en-GB", {
       day: "numeric",
-      month: "short",
-      year: "numeric",
+      month: "short"
     });
   };
 
-  const completedTasks = checklist.filter((item) => item.done).length;
+  const completedTasks = localChecklist.filter((item) => item.done).length;
 
   return (
     <div className={styles.taskCard}>
@@ -56,12 +87,27 @@ const TaskCard = ({ task }) => {
         {title.length > 20 ? `${title.slice(0, 20)}...` : title}
       </div>
       <div className={styles.checklist}>
-        Checklist ({completedTasks}/{checklist.length})
-        <img src={Arrow} alt="Expand/Collapse" className={styles.arrowIcon} />
+        Checklist ({completedTasks}/{localChecklist.length})
+        <img src={Arrow} alt="Expand/Collapse" className={styles.arrowIcon} onClick={toggleChecklistVisibility} />
       </div>
-      <div className={styles.dueDate}>{formatDueDate(dueDate)}</div>
+      {showChecklist && (
+        <div className={styles.checklistItems}>
+          {localChecklist.map((item, index) => (
+            <div key={index} className={styles.checklistItem}>
+              <input
+                type="checkbox"
+                checked={item.done}
+                onChange={() => toggleChecklistItem(index)}
+                className={styles.checklistCheckbox}
+              />
+              <span className={styles.checklistText}>{item.text}</span>
+            </div>
+          ))}
+        </div>
+      )}
+      <div className={styles.ButtonContainer}>
+      <div className={styles.dueDate} style={getDueDateBackgroundColor()}>{formatDueDate(dueDate)}</div>
       <div className={styles.statusButtons}>
-        {/* Show "Backlog" button if the task is not already in "Backlog" */}
         {status !== "backlog" && (
           <button
             className={styles.statusButton}
@@ -70,8 +116,6 @@ const TaskCard = ({ task }) => {
             Backlog
           </button>
         )}
-
-        {/* Show "To Do" button if the task is not in "To Do" */}
         {status !== "to-do" && (
           <button
             className={styles.statusButton}
@@ -80,18 +124,14 @@ const TaskCard = ({ task }) => {
             To Do
           </button>
         )}
-
-        {/* Show "In Progress" button if the task is not in "In Progress" */}
-        {status !== "progress" && (
+        {status !== "in-progress" && (
           <button
             className={styles.statusButton}
-            onClick={() => updateStatus(task._id, "progress")}
+            onClick={() => updateStatus(task._id, "in-progress")}
           >
             In Progress
           </button>
         )}
-
-        {/* Show "Done" button if the task is not in "Done" */}
         {status !== "done" && (
           <button
             className={styles.statusButton}
@@ -100,6 +140,7 @@ const TaskCard = ({ task }) => {
             Done
           </button>
         )}
+      </div>
       </div>
     </div>
   );

@@ -1,14 +1,15 @@
 // models/taskModel.js
 const mongoose = require('mongoose');
-const checklistItemSchema = new mongoose.Schema({
-    text: { type: String, required: true },
-    done: { type: Boolean, default: false },
-  });
 
 const taskSchema = new mongoose.Schema({
   title: String,
   priority: { type: String, enum: ['LOW', 'MODERATE', 'HIGH'] },
-  checklist: [checklistItemSchema],
+  checklist:[
+    {
+      text: { type: String, required: true },
+      done: { type: Boolean, default: false },
+    },
+  ],
   assignedEmails: [{ type: String }],
   dueDate: { type: Date,default: "" },
   createdAt: { type: Date, default: Date.now }

@@ -15,6 +15,7 @@ import TaskModal from "../Components/TaskModal.jsx";
 import Settings from "./Settings.jsx";
 import Analytics from "../Components/Analytics.jsx";
 import Addpeople from "./Addpeople.jsx";
+import Taskcard from "./Taskcard.jsx";
 function Dashboard() {
   const navigate = useNavigate();
   const [currentDate, setCurrentDate] = useState("");
@@ -22,6 +23,7 @@ function Dashboard() {
   const [showModal, setShowModal] = useState(false);
   const [showTaskModal, setShowTaskModal] = useState(false);
   const [showAddPeopleModal, setShowAddPeopleModal] = useState(false);
+  const [tasks, setTasks] = useState([]);
   const username = localStorage.getItem("name");
 
   const handleLogout = () => {
@@ -46,9 +48,22 @@ function Dashboard() {
   const handleSectionClick = (section) => {
     setActiveSection(section);
   };
-  // const toggleAddPeopleModal = () => {
-  //   setShowAddPeopleModal(true);
-  // };
+  const handleSaveTask = (newTask) => {
+    // Set a default status if it's not already provided
+    const taskWithStatus = { ...newTask, status: newTask.status || "to-do" };
+    const updatedTasks = [...tasks, taskWithStatus];
+    setTasks(updatedTasks); // Update tasks state
+    console.log("Updated Tasks:", updatedTasks); // Log the tasks for verification
+    setShowTaskModal(false);
+  };
+  const handleUpdateTaskStatus = (taskId, newStatus) => {
+    console.log("Updating task status for:", taskId, "to:", newStatus);
+    setTasks(
+      tasks.map((task) =>
+        task._id === taskId ? { ...task, status: newStatus } : task
+      )
+    );
+  };
   return (
     <div className={styles.container}>
       <div className={styles.left}>
@@ -114,12 +129,26 @@ function Dashboard() {
             <div className={styles.Group}>
               <p>Board</p>
               <img src={Group} alt="Group" />
-              <span className={styles.addPeople} onClick={() => setShowAddPeopleModal(true)}>Add People</span>
+              <span
+                className={styles.addPeople}
+                onClick={() => setShowAddPeopleModal(true)}
+              >
+                Add People
+              </span>
             </div>
             <div className={styles.boardContainer}>
               <div className={styles.boardColumn}>
                 <h4>Backlog</h4>
                 <img src={collapse} alt="collapse" />
+                {tasks
+                  .filter((task) => task.status === "backlog")
+                  .map((task, index) => (
+                    <Taskcard
+                      key={index}
+                      task={task}
+                      updateStatus={handleUpdateTaskStatus}
+                    />
+                  ))}
               </div>
               <div className={styles.Todo}>
                 <h4>To do</h4>
@@ -129,26 +158,62 @@ function Dashboard() {
                   alt="add"
                   onClick={() => setShowTaskModal(true)}
                 />
+                <img src={collapse} alt="collapse" />
+                {console.log(
+                  "Rendering To-Do Tasks:",
+                  tasks.filter((task) => task.status === "to-do")
+                )}
+                {tasks
+                  .filter((task) => task.status === "to-do")
+                  .map((task, index) => (
+                    <Taskcard
+                      key={index}
+                      task={task}
+                      updateStatus={handleUpdateTaskStatus}
+                    />
+                  ))}
               </div>
               <div className={styles.boardColumn}>
                 <h4>In progress</h4>
                 <img src={collapse} alt="collapse" />
+                {tasks
+                  .filter((task) => task.status === "in-progress")
+                  .map((task, index) => (
+                    <Taskcard
+                      key={index}
+                      task={task}
+                      updateStatus={handleUpdateTaskStatus}
+                    />
+                  ))}
               </div>
               <div className={styles.boardColumn}>
                 <h4>Done</h4>
                 <img src={collapse} alt="collapse" />
+                {tasks
+                  .filter((task) => task.status === "done")
+                  .map((task, index) => (
+                    <Taskcard
+                      key={index}
+                      task={task}
+                      updateStatus={handleUpdateTaskStatus}
+                    />
+                  ))}
               </div>
             </div>
             <TaskModal
               showModal={showTaskModal}
               handleClose={() => setShowTaskModal(false)}
+              onTaskSaved={handleSaveTask}
             />
           </>
         )}
         {activeSection === "Settings" && <Settings />}
         {activeSection === "Analytics" && <Analytics />}
       </div>
-      <Addpeople showModal={showAddPeopleModal} handleClose={() => setShowAddPeopleModal(false)} />
+      <Addpeople
+        showModal={showAddPeopleModal}
+        handleClose={() => setShowAddPeopleModal(false)}
+      />
     </div>
   );
 }

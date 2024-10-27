@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import styles from "../Components/TaskModal.module.css";
 import axios from "axios";
 import trashicon from "../assets/Delete.png";
@@ -13,13 +13,11 @@ const TaskModal = ({ showModal, handleClose, onTaskSaved }) => {
   const [assignedEmails, setAssignedEmails] = useState([]);
   const [showEmailDropdown, setShowEmailDropdown] = useState(false);
   const [calendarOpen, setCalendarOpen] = useState(false);
-
   const dateInputRef = useRef(null);
+
   const fetchEmails = async () => {
     try {
-      const response = await axios.get(
-        "http://localhost:5000/api/users/emails"
-      );
+      const response = await axios.get("http://localhost:5000/api/users/emails");
       console.log(response.data);
       setEmails(response.data);
     } catch (error) {
@@ -39,6 +37,7 @@ const TaskModal = ({ showModal, handleClose, onTaskSaved }) => {
       setShowEmailDropdown(false);
     }
   };
+
   const toggleCalendar = () => {
     setCalendarOpen(!calendarOpen);
   };
@@ -54,7 +53,7 @@ const TaskModal = ({ showModal, handleClose, onTaskSaved }) => {
     }
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     document.addEventListener("mousedown", handleClickOutside);
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
@@ -75,16 +74,14 @@ const TaskModal = ({ showModal, handleClose, onTaskSaved }) => {
     if (assignedEmails.length === 0) {
       newErrors.assignedEmails = "Assignee is required";
     }
-
     setErrors(newErrors);
-
     if (Object.keys(newErrors).length === 0) {
       try {
         const response = await axios.post("http://localhost:5000/api/tasks", {
           title,
           priority,
-          checklist,
-          dueDate: dueDate ? new Date(dueDate).toLocaleDateString("en-GB") : "",
+          checklist:checklist.map(item => ({ text: item.text, done: item.done })),
+          dueDate: dueDate ? new Date(dueDate).toISOString().split("T")[0] : "",
           status: "to-do",
           assignedEmails,
         });
@@ -96,7 +93,6 @@ const TaskModal = ({ showModal, handleClose, onTaskSaved }) => {
         setAssignedEmails([]);
         setChecklist([]);
         setDueDate("");
-        handleClose();
       } catch (error) {
         console.error("Error saving task:", error);
       }
@@ -114,7 +110,6 @@ const TaskModal = ({ showModal, handleClose, onTaskSaved }) => {
     updatedChecklist[index].done = !updatedChecklist[index].done;
     setChecklist(updatedChecklist);
   };
-
   const handleDeleteChecklistItem = (index) => {
     const updatedChecklist = checklist.filter((_, i) => i !== index);
     setChecklist(updatedChecklist);
