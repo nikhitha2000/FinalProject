@@ -10,6 +10,7 @@ const taskSchema = new mongoose.Schema({
       done: { type: Boolean, default: false },
     },
   ],
+  status: { type: String, default: "to-do" },
   assignedEmails: [{ type: String }],
   dueDate: { type: Date,default: "" },
   createdAt: { type: Date, default: Date.now }
