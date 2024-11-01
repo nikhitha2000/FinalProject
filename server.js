@@ -3,7 +3,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const userRoutes = require('./Server/routes/user');
-const taskRoutes = require('./Server/routes/Taskroutes');  // <-- Add task routes
+const taskRoutes = require('./Server/routes/Taskroutes'); 
 const cors = require('cors');
 const bodyParser = require('body-parser');
 
@@ -15,7 +15,7 @@ app.use(bodyParser.json());
 app.use(cors());
 
 
-mongoose.connect(process.env.MONGO_URI)  // Using the MongoDB URI from .env
+mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log('MongoDB connected'))
   .catch((err) => {
     console.error('MongoDB connection error:', err);
