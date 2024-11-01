@@ -1,16 +1,17 @@
+// eslint-disable-next-line no-unused-vars
 import React, { useState, useRef, useEffect } from "react";
 import styles from "../Components/TaskModal.module.css";
 import axios from "axios";
 import trashicon from "../assets/Delete.png";
 
-const TaskModal = ({ showModal, handleClose, onTaskSaved }) => {
-  const [title, setTitle] = useState("");
-  const [priority, setPriority] = useState("");
-  const [checklist, setChecklist] = useState([]);
-  const [dueDate, setDueDate] = useState(null);
+const TaskModal = ({ showModal, handleClose, onTaskSaved, onSave, task = {}, mode = "add" }) => {
+  const [title, setTitle] = useState(task.title||"");
+  const [priority, setPriority] = useState(task.priority || "");
+  const [checklist, setChecklist] = useState(task.checklist || []);
+  const [dueDate, setDueDate] = useState(task.dueDate || "");
   const [errors, setErrors] = useState({});
   const [emails, setEmails] = useState([]);
-  const [assignedEmails, setAssignedEmails] = useState([]);
+  const [assignedEmails, setAssignedEmails] = useState(task.assignedEmails || []);
   const [showEmailDropdown, setShowEmailDropdown] = useState(false);
   const [calendarOpen, setCalendarOpen] = useState(false);
   const dateInputRef = useRef(null);
@@ -52,6 +53,18 @@ const TaskModal = ({ showModal, handleClose, onTaskSaved }) => {
       setCalendarOpen(false);
     }
   };
+  const formatDueDate = (date) => {
+    if (!date) return "";
+    const taskDate = new Date(date);
+    return taskDate.toLocaleDateString("en-GB", {
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric",
+    });
+  };
+  useEffect(() => {
+    console.log("onTaskSaved in TaskModal:", onTaskSaved); // This should not be undefined if passed correctly
+}, [onTaskSaved]);
 
   useEffect(() => {
     document.addEventListener("mousedown", handleClickOutside);
@@ -59,42 +72,51 @@ const TaskModal = ({ showModal, handleClose, onTaskSaved }) => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
-
   const handleSave = async () => {
     const newErrors = {};
     if (!title.trim()) {
       newErrors.title = "Title is required";
     }
-    if (!priority) {
-      newErrors.priority = "Priority is required";
+    if (mode === "add") {
+      if (!priority) newErrors.priority = "Priority is required";
+      if (checklist.length === 0) newErrors.checklist = "Checklist is required";
+      if (assignedEmails.length === 0) newErrors.assignedEmails = "Assignee is required";
     }
-    if (checklist.length === 0) {
-      newErrors.checklist = "Checklist is required";
-    }
-    if (assignedEmails.length === 0) {
-      newErrors.assignedEmails = "Assignee is required";
-    }
+    
     setErrors(newErrors);
     if (Object.keys(newErrors).length === 0) {
       try {
-        const response = await axios.post("http://localhost:5000/api/tasks", {
+        const taskData = {
           title,
           priority,
-          checklist:checklist.map(item => ({ text: item.text, done: item.done })),
-          dueDate: dueDate ? new Date(dueDate).toISOString().split("T")[0] : "",
-          status: "to-do",
+          checklist: checklist.map(item => ({ text: item.text, done: item.done })),
+          dueDate: dueDate === "" ? null : new Date(dueDate),
+          status: task.status || "to-do",
           assignedEmails,
-        });
-        onTaskSaved(response.data);
+        };
+        console.log("Saving task data:", taskData);
+        let response;
+        if (mode === "add" && typeof onTaskSaved === "function") {
+          try {
+              onTaskSaved(taskData); // No need to await or access data
+              console.log("Task saved successfully.");
+          } catch (error) {
+              console.error("Error in handleSave:", error);
+          }
+      } else if (mode === "edit" && typeof onSave === "function") {
+          onSave(taskData);
+      } else {
+          console.error("No valid save function provided");
+      }
+        console.log("Task saved successfully:", response.data); 
         handleClose();
-        console.log("Task saved:", response.data);
         setTitle("");
         setPriority("");
         setAssignedEmails([]);
         setChecklist([]);
         setDueDate("");
       } catch (error) {
-        console.error("Error saving task:", error);
+        console.error("Error saving task:", error.response ? error.response.data : error.message);
       }
     }
   };
@@ -253,13 +275,11 @@ const TaskModal = ({ showModal, handleClose, onTaskSaved }) => {
         </button>
         <div className={styles.buttonGroup}>
           <div className={styles.datePickerContainer} ref={dateInputRef}>
-            <button
+          <button
               className={styles.datePickerButton}
               onClick={toggleCalendar}
             >
-              {dueDate
-                ? ` ${new Date(dueDate).toLocaleDateString("en-GB")}`
-                : "Select Due Date"}
+              {dueDate ? formatDueDate(dueDate) : "Select Due Date"}
             </button>
             {calendarOpen && (
               <div className={styles.calendarDropdown}>
@@ -278,7 +298,7 @@ const TaskModal = ({ showModal, handleClose, onTaskSaved }) => {
             Cancel
           </button>
           <button className={styles.saveButton} onClick={handleSave}>
-            Save
+            {mode === "add" ? "Save" : "Update"}
           </button>
         </div>
       </div>

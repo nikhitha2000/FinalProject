@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import styles from "../Components/Dashboard.module.css";
 import { useNavigate } from "react-router-dom";
 import icon from "../assets/codesandbox.png";
+import axios from "axios";
 import Board from "../assets/layout.png";
 import AnalyticsIcon from "../assets/database.png";
 import settingsIcon from "../assets/settings.png";
@@ -24,14 +25,26 @@ function Dashboard() {
   const [showTaskModal, setShowTaskModal] = useState(false);
   const [showAddPeopleModal, setShowAddPeopleModal] = useState(false);
   const [tasks, setTasks] = useState([]);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [taskToEdit, setTaskToEdit] = useState(null);
   const username = localStorage.getItem("name");
-
   const handleLogout = () => {
     localStorage.removeItem("name");
     localStorage.removeItem("token");
     navigate("/login");
   };
 
+  useEffect(() => {
+    const fetchTasks = async () => {
+      try {
+        const response = await axios.get("http://localhost:5000/api/tasks");
+        setTasks(response.data);
+      } catch (error) {
+        console.error("Error fetching tasks:", error);
+      }
+    };
+    fetchTasks();
+  }, []);
   useEffect(() => {
     const updateDate = () => {
       const today = new Date();
@@ -49,12 +62,24 @@ function Dashboard() {
     setActiveSection(section);
   };
   const handleSaveTask = (newTask) => {
-    // Set a default status if it's not already provided
+    console.log("handleSaveTask called with:", newTask);
     const taskWithStatus = { ...newTask, status: newTask.status || "to-do" };
     const updatedTasks = [...tasks, taskWithStatus];
-    setTasks(updatedTasks); // Update tasks state
-    console.log("Updated Tasks:", updatedTasks); // Log the tasks for verification
+    setTasks(updatedTasks);
+    console.log("Updated Tasks:", updatedTasks);
     setShowTaskModal(false);
+  };
+  const handleEditTask = (task) => {
+    setTaskToEdit(task);
+    setIsEditModalOpen(true);
+  };
+  const handleSaveEditedTask = (updatedTask) => {
+    setTasks((prevTasks) =>
+      prevTasks.map((task) =>
+        task._id === updatedTask._id ? updatedTask : task
+      )
+    );
+    setIsEditModalOpen(false);
   };
   const handleUpdateTaskStatus = (taskId, newStatus) => {
     console.log("Updating task status for:", taskId, "to:", newStatus);
@@ -147,6 +172,7 @@ function Dashboard() {
                       key={index}
                       task={task}
                       updateStatus={handleUpdateTaskStatus}
+                      onEditTask={handleEditTask}
                     />
                   ))}
               </div>
@@ -170,6 +196,7 @@ function Dashboard() {
                       key={index}
                       task={task}
                       updateStatus={handleUpdateTaskStatus}
+                      onEditTask={handleEditTask}
                     />
                   ))}
               </div>
@@ -183,6 +210,7 @@ function Dashboard() {
                       key={index}
                       task={task}
                       updateStatus={handleUpdateTaskStatus}
+                      onEditTask={handleEditTask}
                     />
                   ))}
               </div>
@@ -196,6 +224,7 @@ function Dashboard() {
                       key={index}
                       task={task}
                       updateStatus={handleUpdateTaskStatus}
+                      onEditTask={handleEditTask}
                     />
                   ))}
               </div>
@@ -205,6 +234,15 @@ function Dashboard() {
               handleClose={() => setShowTaskModal(false)}
               onTaskSaved={handleSaveTask}
             />
+            {isEditModalOpen && (
+              <TaskModal
+                showModal={isEditModalOpen}
+                task={taskToEdit}
+                onSave={handleSaveEditedTask}
+                handleClose={() => setIsEditModalOpen(false)}
+                mode="edit"
+              />
+            )}
           </>
         )}
         {activeSection === "Settings" && <Settings />}

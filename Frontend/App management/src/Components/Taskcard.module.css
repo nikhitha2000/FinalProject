@@ -49,7 +49,21 @@
   align-items: center;
   margin-bottom: 10px;
 }
-
+.optionItem{
+  margin-bottom: 5px;
+  font-family: 'Poppins',sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+}
+.deleteItem{
+  color: #cf3636;
+  margin-bottom: 5px;
+  font-family: 'Poppins',sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+}
 .priorityCircle {
   width: 10px;
   height: 10px;
@@ -69,6 +83,7 @@
   font-weight: 500;
   margin-bottom: 10px;
   font-family: 'Poppins', sans-serif;
+  cursor: pointer;
 }
 
 .checklist {

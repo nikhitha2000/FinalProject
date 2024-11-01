@@ -6,6 +6,6 @@ const taskController = require('../controllers/Taskcontroller');
 // Route to fetch tasks with filtering
 router.post('/', taskController.createTask);
 router.get('/', taskController.getTasks);
-
+router.put('/:id', taskController.updateTask);
 
 module.exports = router;
